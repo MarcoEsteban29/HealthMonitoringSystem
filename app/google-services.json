@@ -1,0 +1,86 @@
+{
+  "project_info": {
+    "project_number": "567424681930",
+    "firebase_url": "https://despro-86742.firebaseio.com",
+    "project_id": "despro-86742",
+    "storage_bucket": "despro-86742.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:567424681930:android:c5a1e98c523e34c9",
+        "android_client_info": {
+          "package_name": "com.example.healthmonitoringsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "567424681930-6sn925olc85r79l9opvk3btb1jr32orp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_saF_fpKh4mu3sqGyU6n4ZQHZZgFytJY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:567424681930:android:6ba65cfa8d259029",
+        "android_client_info": {
+          "package_name": "com.example.maru.despro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "567424681930-5huag71gtknkn30no8u55gheif55s9k4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.maru.despro",
+            "certificate_hash": "f696e866837840e3eb4ecd344103bce17c5d137d"
+          }
+        },
+        {
+          "client_id": "567424681930-6sn925olc85r79l9opvk3btb1jr32orp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_saF_fpKh4mu3sqGyU6n4ZQHZZgFytJY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "567424681930-6sn925olc85r79l9opvk3btb1jr32orp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
