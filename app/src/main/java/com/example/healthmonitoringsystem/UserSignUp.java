@@ -81,7 +81,7 @@ public class UserSignUp extends AppCompatActivity implements View.OnClickListene
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     LineFollowerInfo lfInfo = new LineFollowerInfo(Bedroom,Kitchen,LivingRoom,Toilet,Emergency);
-                                    FirebaseDatabase.getInstance().getReference("Users").child(emailAdd.replace(".", ",")).child("LineFollowerInformation").setValue(lfInfo);
+                                    FirebaseDatabase.getInstance().getReference("Patients").child("Elderly1").child("LineFollowerInformation").setValue(lfInfo);
                                     Toast.makeText(UserSignUp.this, "Registered Successfully,   Email Verification sent to " + firebaseAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
                                     firebaseAuth.getCurrentUser().sendEmailVerification();
                                     firebaseAuth.getCurrentUser().reload();

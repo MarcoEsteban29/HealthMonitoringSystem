@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -29,16 +30,16 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText LogEmail, LogPassword;
-    ProgressDialog progressDialog;
+    EditText LogEmail, LogPassword,AuthCode;
+
    FirebaseAuth mAuth;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mRef = database.getReference("Users");
-    DatabaseReference mRef1 = database.getReference("Patients").child("Elderly1").child("Notification");
-    String emailAdd;
+    DatabaseReference mRef2 = database.getReference("Patients").child("Elderly1").child("Notification");
+    String emailAdd,AuthCodes;
     String Password;
     String verify;
-    String nAme, cp, email, age,femail;
+    String nAme, cp, email, age,femail, tokencompare;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +48,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         findViewById(R.id.TVSignUp).setOnClickListener(this);
         findViewById(R.id.LogInButton).setOnClickListener(this);
-        progressDialog = new ProgressDialog(this);
+
         mAuth = FirebaseAuth.getInstance();
         LogEmail = findViewById(R.id.LogInEmail);
         LogPassword = findViewById(R.id.LogInPassword);
+        AuthCode = findViewById(R.id.LoginAuthCode);
 
 
     }
     private void userLogin() {
         emailAdd = LogEmail.getText().toString().trim();
         Password = LogPassword.getText().toString().trim();
+        AuthCodes = AuthCode.getText().toString().trim();
+        Log.d("wew",mRef2.child("Elderly1").getKey());
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -67,7 +71,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else if (TextUtils.isEmpty(Password)) {
                     LogPassword.requestFocus();
                     Toast.makeText(MainActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
-                } else if (!Patterns.EMAIL_ADDRESS.matcher(emailAdd).matches()) {
+                } else if (TextUtils.isEmpty(AuthCodes)) {
+                    LogPassword.requestFocus();
+                    Toast.makeText(MainActivity.this, "Please Enter AuthenticationCode", Toast.LENGTH_SHORT).show();
+                }else if (!Patterns.EMAIL_ADDRESS.matcher(emailAdd).matches()) {
                     Toast.makeText(MainActivity.this, "Please Enter a Valid Email", Toast.LENGTH_SHORT).show();
                     LogEmail.requestFocus();
 
@@ -84,17 +91,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     });
 
+                }else if (!AuthCodes.equals(mRef2.child("Elderly1").getKey())) {
+                    LogPassword.requestFocus();
+                    Toast.makeText(MainActivity.this, "No Valid Authentication Code", Toast.LENGTH_SHORT).show();
                 }
                 else {
-//                    progressDialog.setMessage("Logging In...");
-//                    progressDialog.show();
+//
                     mAuth.signInWithEmailAndPassword(emailAdd, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
 
-
-//                             progressDialog.dismiss();
+                                mRef.child(emailAdd.replace(".", ",")).child("PersonalInformation").child("AuthCode").setValue(AuthCodes);
+//
                                 mRef.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -105,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         femail = email.replace(".",",");
                                         SharedPreferences.Editor editor = getSharedPreferences("Information", MODE_PRIVATE).edit();
                                         editor.putString("name", nAme);
+                                        editor.putString("Authcode",AuthCodes);
                                         editor.putString("cp", cp);
                                         editor.putString("email", femail);
                                         editor.putString("age", age);
@@ -115,10 +125,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
+
                                     }
                                 });
 
-                                mRef1.child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                mRef2.child(FirebaseInstanceId.getInstance().getToken()).setValue("true");
+//                                mRef2.addValueEventListener(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                        if (dataSnapshot.hasChildren())
+//                                        {
+//                                            for(DataSnapshot ds : dataSnapshot.getChildren()){
+//                                                if (ds.getValue().equals(tokencompare))
+//                                                {
+//                                                    break;
+//                                                }
+//                                                else{
+//
+//                                                }
+//                                            }
+//
+//
+//                                        }
+//                                        else{
+//                                            mRef2.push().setValue(FirebaseInstanceId.getInstance().getToken());
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                                    }
+//                                });
+
+
                                 Intent intent = new Intent(MainActivity.this, MonitorActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 finish();
@@ -128,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             } else {
                                 Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                                progressDialog.dismiss();
+
                             }
                         }
                     });

@@ -8,37 +8,48 @@
     tools:context=".MonitorActivity">
 
 
-    <Button
-        android:id="@+id/btrecord"
+    <TextView
+        android:id="@+id/heartrate"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="125dp"
-        android:layout_marginBottom="105dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
 
-        android:text="View record" />
-<TextView
-    android:id="@+id/heartrate"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="heartRATE"
-    android:layout_marginTop="100dp"
-    android:layout_marginLeft="50dp"
-    android:textSize="20sp"/>
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="300dp"
-        android:src="@drawable/temp38"
-        android:layout_toRightOf="@id/heartrate"
-        tools:ignore="ContentDescription" />
-     <ImageView
-        android:id="@+id/temp"
-        android:layout_width="151.7dp"
-        android:layout_height="300dp"
-        android:layout_toRightOf="@id/heartrate"
-         tools:ignore="ContentDescription" />
+        android:text="heartRATE"
+        android:textSize="25sp" />
 
+    <TextView
+        android:id="@+id/HRvalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/heartrate"
+        android:layout_centerHorizontal="true"
+
+        android:layout_marginTop="30dp"
+        android:text="Value BPM"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_centerHorizontal="true"
+
+        android:layout_below="@+id/HRvalue"
+        android:layout_centerVertical="true"
+        android:id="@+id/TemperatureText"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_height="wrap_content"
+        android:text="Temperature"
+        android:textSize="25sp" />
+    <TextView
+        android:id="@+id/TempValue"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/TemperatureText"
+        android:layout_marginTop="30dp"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Temperature"
+        android:textSize="15sp" />
 
 
 </RelativeLayout>

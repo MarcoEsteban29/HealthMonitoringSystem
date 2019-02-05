@@ -3,16 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Temperature"
     android:layout_marginTop="20dp"
-    >
+    tools:context=".Temperature">
 
- <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:id="@+id/searchSpinner"
-     android:padding="5dp">
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        android:id="@+id/searchSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
 
- </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+    </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+    <ScrollView
+        android:layout_below="@+id/searchSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/RecordTVs"
+            android:text="No TEXT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"/>
+
+
+    </ScrollView>
 
 </RelativeLayout>

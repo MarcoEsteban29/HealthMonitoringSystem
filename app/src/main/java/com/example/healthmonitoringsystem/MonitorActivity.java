@@ -26,12 +26,10 @@ import java.util.List;
 
 public class MonitorActivity extends BaseActivity {
 
-    Button record;
-   ImageView temp;
-    TextView heartRate;
-    int dataCount = 0;
-    int count = 0;
-    String uName;
+
+    TextView heartRate,temp;
+
+    String uName,auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,20 +40,45 @@ public class MonitorActivity extends BaseActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.getMenu().getItem(0).setChecked(true);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference hrRef1 = database.getReference("HeartRateTemporary");
-        hrRef1.removeValue();
+
+
 
         SharedPreferences pref = getSharedPreferences("Information",MODE_PRIVATE);
         uName = pref.getString("email","");
-        temp = findViewById(R.id.temp);
-        heartRate = findViewById(R.id.heartrate);
-        record= findViewById(R.id.btrecord);
+        auth = pref.getString("Authcode","");
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference hrRef = database.getReference("Patients").child(auth).child("HeartRateValue");
+        DatabaseReference TRef = database.getReference("Patients").child(auth).child("TemperatureValue");
+        heartRate = findViewById(R.id.HRvalue);
+        temp = findViewById(R.id.TempValue);
+
+
+        hrRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                heartRate.setText(String.valueOf(dataSnapshot.getValue())+ " BPM");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        TRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                temp.setText(String.valueOf(dataSnapshot.getValue()) + " C");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
 
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference databaseReference = firebaseDatabase.getReference("HeartRateTemporary");
+
 
     }
 
