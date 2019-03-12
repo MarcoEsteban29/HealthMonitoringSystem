@@ -29,15 +29,19 @@
             android:theme="@style/AppTheme.NoActionbar"></activity>
         <activity
             android:name=".MonitorActivity"
+            android:label="Monitor"
             android:theme="@style/AppTheme.NoActionbar" />
         <activity
             android:name=".LineFollowerActivity"
+            android:label="LineFollower"
             android:theme="@style/AppTheme.NoActionbar" />
         <activity
             android:name=".ProfileActivity"
+            android:label="Profile"
             android:theme="@style/AppTheme.NoActionbar" />
         <activity
             android:name=".Temperature"
+            android:label="Records"
             android:theme="@style/AppTheme.NoActionbar" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

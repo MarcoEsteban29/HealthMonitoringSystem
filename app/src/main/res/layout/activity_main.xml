@@ -4,56 +4,112 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".UserSignUp"
-    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
     android:paddingLeft="16dp"
+    android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:background="@drawable/green_bg"
-    android:paddingBottom="16dp">
+    tools:context=".UserSignUp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/trans_white_rect"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:layout_marginTop="30dp"
+        android:id="@+id/logo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:foregroundGravity="center"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true">
+        android:background="@drawable/logo"/>
+    <LinearLayout
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/layoutbg"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_below="@+id/logo"
+        >
 
-        <EditText
-            android:id="@+id/LogInEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:text="mark.fabon29@gmail.com"
+        <LinearLayout
+            android:id="@+id/LL"
+            android:layout_width="300dp"
+            android:layout_height="165dp"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonshape"
+            android:orientation="vertical">
 
-            android:hint="Email"/>
+            <LinearLayout
+                android:layout_width="340dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/LogInPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="textPassword"
-            android:text="1234567" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Elderly1"
-            android:id="@+id/LoginAuthCode"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:id="@+id/LogInButton"
-            android:text="Log In"
+                <EditText
+                    android:id="@+id/LogInEmail"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:text="mark.fabon29@gmail.com"
+                    android:textSize="20dp" />
 
-            />
-        <TextView
+                <EditText
+                    android:id="@+id/LogInPassword"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:inputType="textPassword"
+                    android:text="1234567"
+                    android:textSize="20dp" />
+                <EditText
+                    android:id="@+id/LoginAuthCode"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:text="Elderly1"
+                    android:textSize="20dp"  />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Don't have an account? Sign Up here!"
-            android:id="@+id/TVSignUp"
-            android:textAlignment="center"/>
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/LL"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/LogInButton"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/buttonshape"
+                android:fontFamily="@font/goblin_one"
+                android:text="Log In"
+                android:textColor="@color/black_de"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TVSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/goblin_one"
+                android:text="Don't have an account? Sign Up here!"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

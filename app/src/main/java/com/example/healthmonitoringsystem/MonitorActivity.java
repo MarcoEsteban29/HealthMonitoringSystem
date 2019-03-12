@@ -52,13 +52,7 @@ TextView emer;
         DatabaseReference TRef = database.getReference("Patients").child(auth).child("TemperatureValue");
         heartRate = findViewById(R.id.HRvalue);
         temp = findViewById(R.id.TempValue);
-        emer = findViewById(R.id.IsEmergency);
-        emer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mrRef.setValue("true");
-            }
-        });
+
 
 
         hrRef.addValueEventListener(new ValueEventListener() {

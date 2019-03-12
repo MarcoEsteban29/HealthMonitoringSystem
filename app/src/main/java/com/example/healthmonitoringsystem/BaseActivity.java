@@ -36,7 +36,7 @@ public class BaseActivity extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View nView = navigationView.getHeaderView(0);
         SharedPreferences preferences = getSharedPreferences("Information",MODE_PRIVATE);
-        Uri uri  = Uri.parse("android.resource://"+this.getPackageName()+"/"+R.drawable.toilet);
+        Uri uri  = Uri.parse("android.resource://"+this.getPackageName()+"/"+R.drawable.logo);
         avatarURL = preferences.getString("URI",uri.toString());
         name = preferences.getString("name","");
         email = preferences.getString("email","");

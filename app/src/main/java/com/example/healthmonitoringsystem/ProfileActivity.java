@@ -68,7 +68,7 @@ public class ProfileActivity extends BaseActivity {
         });
 
         ProfileImage = findViewById(R.id.profile);
-        Uri uri  = Uri.parse("android.resource://"+this.getPackageName()+"/"+R.drawable.toilet);
+        Uri uri  = Uri.parse("android.resource://"+this.getPackageName()+"/"+R.drawable.logo);
         Picture = pref.getString("URI",uri.toString());
         Picasso.with(this).load(Picture).into(ProfileImage);
 

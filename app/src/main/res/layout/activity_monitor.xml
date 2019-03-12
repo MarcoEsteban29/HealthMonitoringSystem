@@ -4,63 +4,116 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
     android:orientation="horizontal"
-
+    android:paddingLeft="40dp"
+    android:paddingTop="20dp"
+    android:paddingRight="40dp"
+    android:paddingBottom="20dp"
     tools:context=".MonitorActivity">
 
-
-    <TextView
-        android:id="@+id/heartrate"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/l2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
-
-        android:text="heartRATE"
-        android:textSize="25sp" />
-
-    <TextView
-        android:id="@+id/HRvalue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/heartrate"
-        android:layout_centerHorizontal="true"
-
-        android:layout_marginTop="30dp"
-        android:text="Value BPM"
-        android:textSize="15sp" />
-
-    <TextView
-        android:layout_centerHorizontal="true"
-
-        android:layout_below="@+id/HRvalue"
         android:layout_centerVertical="true"
-        android:id="@+id/TemperatureText"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_height="wrap_content"
-        android:text="Temperature"
-        android:textSize="25sp" />
-    <TextView
-        android:id="@+id/TempValue"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/TemperatureText"
-        android:layout_marginTop="30dp"
-        android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Temperature"
-        android:textSize="15sp" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/IsEmergency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        android:text="                   "
-        android:textSize="30dp"
-        android:layout_below="@+id/TempValue"
-        android:layout_centerHorizontal="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/l1"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_above="@id/l2"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/shadow"
+        android:elevation="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="225dp"
+            android:layout_height="150dp"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/heartrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="Heart Rate"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/HRvalue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Value BPM"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/heart" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/l1"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shadow"
+
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="125dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="-7dp"
+            android:background="@drawable/tempy" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_marginLeft="-20dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TempValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Temperature"
+                android:textColor="@color/white"
+                android:textSize="37sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TemperatureText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Temperature"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </RelativeLayout>

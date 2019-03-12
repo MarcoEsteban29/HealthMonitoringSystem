@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -24,7 +25,7 @@ import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class LineFollowerActivity extends BaseActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference mRef = database.getReference("Patients");
+
     String uName;
     int pos, col;
     String HexColor, LFcolors;
@@ -34,11 +35,11 @@ public class LineFollowerActivity extends BaseActivity {
 
 
     int[] imageId = {
-            R.drawable.bed,
+            R.drawable.bedroom,
             R.drawable.kitchen,
             R.drawable.livingroom,
             R.drawable.toilet,
-            R.drawable.ic_two,
+            R.drawable.emergency,
     };
     String[] web = {"Bedroom", "Kitchen", "LivingRoom", "Toilet", "Emergency"};
 
@@ -59,13 +60,16 @@ public class LineFollowerActivity extends BaseActivity {
         colorsEmergency.add("#00ff00");
         SharedPreferences prefs = getSharedPreferences("Information", MODE_PRIVATE);
         uName = prefs.getString("Authcode", "");
+        final DatabaseReference mRef = database.getReference("Patients").child(uName).child("LineFollowerInformation");
         ImageAdapter adapter = new ImageAdapter(this, web, imageId);
+
         GridView grid = (GridView) findViewById(R.id.gridView);
         grid.setNumColumns(2);
-        grid.setColumnWidth(25);
         grid.setVerticalSpacing(100);
         grid.setHorizontalSpacing(100);
+        grid.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
         grid.setAdapter(adapter);
+
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -80,9 +84,25 @@ public class LineFollowerActivity extends BaseActivity {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                LFcolors = "Bedroom: " + dataSnapshot.child(uName).child("LineFollowerInformation").child("Bedroom").getValue() + "\n" + "Kitchen: " + dataSnapshot.child(uName).child("LineFollowerInformation").child("Kitchen").getValue() + "\n"
-                        + "LivingRoom: " + dataSnapshot.child(uName).child("LineFollowerInformation").child("LivingRoom").getValue() + "\n" + "Toilet: " + dataSnapshot.child(uName).child("LineFollowerInformation").child("Toilet").getValue() + "\n"
-                        + "Emergency: " + dataSnapshot.child(uName).child("LineFollowerInformation").child("Emergency").getValue();
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    if(ds.getValue().equals("#ff0000")){
+                        mRef.child(ds.getKey()).setValue("Red");
+                    }
+                    if(ds.getValue().equals("#0000ff")){
+                        mRef.child(ds.getKey()).setValue("Blue");
+                    }
+                    if(ds.getValue().equals("#ffff00")){
+                        mRef.child(ds.getKey()).setValue("Yellow");
+                    }
+                    if(ds.getValue().equals("#00ff00")){
+                        mRef.child(ds.getKey()).setValue("Green");
+                    }
+
+                }
+                LFcolors = "Bedroom: " + dataSnapshot.child("Bedroom").getValue() + "\n" + "Kitchen: " + dataSnapshot.child("Kitchen").getValue() + "\n"
+                        + "LivingRoom: " + dataSnapshot.child("LivingRoom").getValue() + "\n" + "Toilet: " + dataSnapshot.child("Toilet").getValue() + "\n"
+                        + "Emergency: " + dataSnapshot.child("Emergency").getValue();
                 lfcolor.setText(LFcolors);
             }
 
@@ -100,27 +120,28 @@ public class LineFollowerActivity extends BaseActivity {
         colorPicker.setColors(colors).setColumns(2).setRoundColorButton(true).setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
             @Override
             public void onChooseColor(int position, int color) {
+                DatabaseReference mRef = database.getReference("Patients").child(uName).child("LineFollowerInformation");
                 col = color;
                 if (pos == 0) {
                     HexColor = String.format("#%06x", (0xFFFFFF) & col);
-                    mRef.child( uName).child("LineFollowerInformation").child("Bedroom").setValue(HexColor);
+                    mRef.child("Bedroom").setValue(HexColor);
                     colors.remove(String.format("#%06x", (0xFFFFFF) & col));
                 }
                 if (pos == 1) {
                     HexColor = String.format("#%06x", (0xFFFFFF) & col);
-                    mRef.child(uName).child("LineFollowerInformation").child("Kitchen").setValue(HexColor);
+                    mRef.child("Kitchen").setValue(HexColor);
                     colors.remove(String.format("#%06x", (0xFFFFFF) & col));
 
                 }
                 if (pos == 2) {
                     HexColor = String.format("#%06x", (0xFFFFFF) & col);
-                    mRef.child(uName).child("LineFollowerInformation").child("LivingRoom").setValue(HexColor);
+                    mRef.child("LivingRoom").setValue(HexColor);
                     colors.remove(String.format("#%06x", (0xFFFFFF) & col));
                 }
 
                 if (pos == 3) {
                     HexColor = String.format("#%06x", (0xFFFFFF) & col);
-                    mRef.child(uName).child("LineFollowerInformation").child("Toilet").setValue(HexColor);
+                    mRef.child("Toilet").setValue(HexColor);
                     colors.remove(String.format("#%06x", (0xFFFFFF) & col));
                 }
 
@@ -141,9 +162,10 @@ public class LineFollowerActivity extends BaseActivity {
         colorPicker.setColors(colorsEmergency).setColumns(2).setRoundColorButton(true).setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
             @Override
             public void onChooseColor(int position, int color) {
+                DatabaseReference mRef = database.getReference("Patients").child(uName).child("LineFollowerInformation");
                 col = color;
                 HexColor = String.format("#%06x", (0xFFFFFF) & col);
-                mRef.child(uName).child("LineFollowerInformation").child("Emergency").setValue(HexColor);
+                mRef.child("Emergency").setValue(HexColor);
             }
 
             @Override

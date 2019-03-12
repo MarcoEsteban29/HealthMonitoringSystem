@@ -2,6 +2,7 @@ package com.example.healthmonitoringsystem;
 
 import android.net.IpSecManager;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.util.Log;
@@ -22,10 +23,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class Temperature extends BaseActivity implements AdapterView.OnItemSelectedListener{
-    TextView HRData,Dates;
+    TextView HRData;
     String HRString = "";
+    String HRTitle = "Heart Rate Record"+"\n"+"------------------------------------------------------------------------"+"\n"+"Day  "+"\t"+"Time/Value";
+    String TempString = "";
+    String TempTitle = "Temperature Record"+"\n"+"------------------------------------------------------------------------"+"\n"+"Day  "+"\t"+"Time/Value";
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mRef = database.getReference("Patients").child("Elderly1").child("HRRecord");
+    DatabaseReference mRef1 = database.getReference("Patients").child("Elderly1").child("TempRecord");
     String[] dates;
     String month;
 
@@ -51,32 +56,17 @@ public class Temperature extends BaseActivity implements AdapterView.OnItemSelec
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren())
                 {
-                     dates = ds.getKey().split(",");
-                     Log.d("munth",dates[0]);
-                     if(dates[0].equals("1"));
-                    {
-                        month = "January" ;
+                    dates = ds.getKey().split(",");
+                    Log.d("munth",dates[0]);
 
-                        for(DataSnapshot data : ds.getChildren())
-                        {
-                            HRString += dates[1] + "   "+ data.getValue() + "\n";
-                        }
-
-                    }
                     if(dates[0].equals("2"));
                     {
-                        month = "February" ;
-                        for(DataSnapshot data : ds.getChildren())
-                        {
-                            HRString += dates[1] + "   "+ data.getValue() + "\n";
-                        }
-                    }
-                    if(dates[0].equals("3"));
-                    {
-                        month = "March" ;
-                        for(DataSnapshot data : ds.getChildren())
-                        {
-                            HRString +=dates[1] + "   "+ data.getValue() + "\n";
+
+                        for (DataSnapshot ds1 : ds.getChildren()) {
+                            String[] values1 = ds1.getValue().toString().split("/");
+                            int integers1 = Double.valueOf(values1[1]).intValue();
+                            HRString = HRString + (dates[1] + "     " +values1[0]+" / "+integers1 +" BPM"+ "\n") + "------------------------------------------------------------------------" + "\n";
+
                         }
                     }
                 }
@@ -87,29 +77,50 @@ public class Temperature extends BaseActivity implements AdapterView.OnItemSelec
 
             }
         });
+        mRef1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren())
+                {
+                    dates = ds.getKey().split(",");
 
+                    if(dates[0].equals("2"));
+                    {
+                        for(DataSnapshot ds1 : ds.getChildren()){
+                            String [] values = ds1.getValue().toString().split("/");
+
+                            int integers = Double.valueOf(values[1]).intValue();
+
+
+                            TempString +=(dates[1] + "     " +values[0]+" / "+ integers + "°C"+"\n")+"------------------------------------------------------------------------"+"\n";
+
+                        }
+}
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Log.d("month", options[position]);
-        if(options[position].equals(month) )
-        {
-            HRData.setText(" ");
-            HRData.setText(HRString);
-        }
-        if(options[position].equals(month)  )
-        {
-            HRData.setText(" ");
-            HRData.setText(HRString);
-        }
-        if(options[position].equals(month)  )
-        {
-            HRData.setText(" ");
-            HRData.setText(HRString);
-        }
 
 
+        if(options[position].equals("February"))
+        {
+                HRData.setText(" ");
+                HRData.setText(HRTitle+"\n"+"------------------------------------------------------------------------"+"\n"+HRString+"\n"+TempTitle+"\n"+"------------------------------------------------------------------------"+"\n"+TempString);
+
+
+        }
+        if(!options[position].equals("February")){
+            HRData.setText(" ");
+        }
     }
 
     @Override
